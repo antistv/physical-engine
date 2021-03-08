@@ -1,6 +1,6 @@
 #include "modules.hpp"
 
-bool basicMod::locationAllowedR(sf::RectangleShape &rect, const int WINDOW_WIDTH, const int WINDOW_HEIGHT) {
+bool basicMod::locationAllowedR(sf::Sprite &rect, const int WINDOW_WIDTH, const int WINDOW_HEIGHT) {
     //std::cout << rect.getPosition().x << " " << rect.getPosition().y << '\n';
     //Left colision
     if(rect.getPosition().x < 0.f){
@@ -23,7 +23,7 @@ bool basicMod::locationAllowedR(sf::RectangleShape &rect, const int WINDOW_WIDTH
     return true;
 }
 
-bool basicMod::move(sf::Event event, sf::RectangleShape &rect, sf::RenderWindow &window){
+bool basicMod::move(sf::Event event, sf::Sprite &rect, sf::RenderWindow &window){
     if ((sf::Mouse::isButtonPressed( sf::Mouse::Left ))) {
         sf::Vector2i localPosition = sf::Mouse::getPosition( window );
         rect.setPosition ( localPosition.x, localPosition.y );
@@ -32,4 +32,21 @@ bool basicMod::move(sf::Event event, sf::RectangleShape &rect, sf::RenderWindow 
     } else { //Nie porusza sie
         return false;
     }
+}
+
+bool basicMod::moveKeyboard(sf::Event, sf::Vector2f &velocity, sf::RenderWindow &window){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+        velocity.y -= 10;
+        return true;
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+        velocity.y += 10;
+        return true;
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+        velocity.x += 10;
+        return true;
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+        velocity.x -= 10;
+        return true;
+    }
+    return false;
 }

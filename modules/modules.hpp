@@ -11,8 +11,9 @@ class physicalModels{
 
 class basicMod{
     public:
-        bool move(sf::Event event, sf::RectangleShape &rect, sf::RenderWindow &window);
-        bool locationAllowedR(sf::RectangleShape &rect, const int WINDOW_WIDTH, const int WINDOW_HEIGHT);
+        bool move(sf::Event event, sf::Sprite &rect, sf::RenderWindow &window);
+        bool moveKeyboard(sf::Event, sf::Vector2f &velocity, sf::RenderWindow &window);
+        bool locationAllowedR(sf::Sprite &rect, const int WINDOW_WIDTH, const int WINDOW_HEIGHT);
 };
 
 class forces{
