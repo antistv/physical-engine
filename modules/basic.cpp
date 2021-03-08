@@ -27,7 +27,6 @@ bool basicMod::move(sf::Event event, sf::Sprite &rect, sf::RenderWindow &window)
     if ((sf::Mouse::isButtonPressed( sf::Mouse::Left ))) {
         sf::Vector2i localPosition = sf::Mouse::getPosition( window );
         rect.setPosition ( localPosition.x, localPosition.y );
-
         return true;
     } else { //Nie porusza sie
         return false;
