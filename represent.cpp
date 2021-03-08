@@ -10,15 +10,26 @@ void myRepresent::start(bool RECT_VISUAL) {
             if (event.type == sf::Event::Closed) window.close();
         }
 
-        if(RECT_VISUAL) rectVisualisation(window, true, true);
+        if(RECT_VISUAL) rectVisualisation(window, true, true, true, true);
     }
 }
 
-void myRepresent::rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool ELASTIC_REBOUND) {
-    rect.setSize(sf::Vector2f(gridSize, gridSize));
-    rect.setFillColor(sf::Color(38, 133, 201));
+void myRepresent::rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool ELASTIC_REBOUND, bool USE_MOUSE, bool USE_KEYBOARD) {
+    sf::Texture texture;
+    if (!texture.loadFromFile("textures/blue.png", sf::IntRect(0, 0, gridSize, gridSize))) {
+        std::cout << "ERROR - to load texture\n";
+        exit(0);
+    }
 
-    if(basicModules.move(event, rect, window) == false){
+    rect.setTexture(texture);
+
+    bool moveMouse = NULL;
+    bool moveKeyboard = NULL;
+
+    if(USE_MOUSE == true) moveMouse  = basicModules.move(event, rect, window);
+    if(USE_KEYBOARD == true) moveKeyboard = basicModules.moveKeyboard(event, velocity, window);
+
+    if(moveMouse == false && moveKeyboard == false){
         //MODUL GRAWITACJI
         if(GRAVITY){
             if(checkGrav == false){
@@ -43,8 +54,6 @@ void myRepresent::rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool
     }
 
     basic.update(rect, velocity);
-
-    window.setActive();
 
     window.clear();
     window.draw(rect);

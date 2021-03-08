@@ -7,13 +7,13 @@
 
 class basicFuncion{
     public:
-        void update(sf::RectangleShape &object,  sf::Vector2f &velocity);
+        void update(sf::Sprite &object,  sf::Vector2f &velocity);
 };
 
 class myRepresent{
     public:
         void start(bool RECT_VISUAL);
-        void rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool ELASTIC_REBOUND);
+        void rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool ELASTIC_REBOUND, bool USE_MOUSE, bool USE_KEYBOARD);
     
     protected:
         const double meter {3.f};
@@ -27,7 +27,7 @@ class myRepresent{
         const int FRAMES {30};
 
         sf::Vector2f velocity;        
-        sf::RectangleShape rect;
+        sf::Sprite rect;
         sf::Event event;
 
         basicMod basicModules;
