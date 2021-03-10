@@ -12,11 +12,13 @@ class basicFuncion{
 
 class myRepresent{
     public:
-        void start(bool RECT_VISUAL);
+        void start(bool RECT_VISUAL, bool VAXUM_VISUAL);
         void rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool ELASTIC_REBOUND, bool USE_MOUSE, bool USE_KEYBOARD);
+        void noGravityVisualisation(sf::RenderWindow &window,  bool USE_MOUSE, bool USE_KEYBOARD, bool VACUUM);
     
     protected:
         const double meter {3.f};
+        sf::Vector2f vacumSpeed;
         double gravitySpeed {1.f};
         const double accelGravitySpeed {9.81 * meter};
         bool checkGrav {false};

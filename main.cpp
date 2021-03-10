@@ -3,5 +3,5 @@
 int main() {
     myRepresent visualisation;
 
-    visualisation.start(true);
+    visualisation.start(true, false);
 }

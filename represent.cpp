@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-void myRepresent::start(bool RECT_VISUAL) {
+void myRepresent::start(bool RECT_VISUAL, bool VAXUM_VISUAL) {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Gravity", sf::Style::Default);
     window.setFramerateLimit(FRAMES);
 
@@ -11,6 +11,7 @@ void myRepresent::start(bool RECT_VISUAL) {
         }
 
         if(RECT_VISUAL) rectVisualisation(window, true, true, true, true);
+        else if(VAXUM_VISUAL) noGravityVisualisation(window, true, true, true);
     }
 }
 
@@ -26,8 +27,8 @@ void myRepresent::rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool
     bool moveMouse = NULL;
     bool moveKeyboard = NULL;
 
-    if(USE_MOUSE == true) moveMouse  = basicModules.move(event, rect, window);
-    if(USE_KEYBOARD == true) moveKeyboard = basicModules.moveKeyboard(event, velocity, window);
+    if(USE_MOUSE == true) moveMouse  = basicModules.move(event, rect, window, vacumSpeed);
+    if(USE_KEYBOARD == true) moveKeyboard = basicModules.moveKeyboard(event, velocity, window, vacumSpeed);
 
     if(moveMouse == false && moveKeyboard == false){
         //MODUL GRAWITACJI
@@ -51,6 +52,35 @@ void myRepresent::rectVisualisation(sf::RenderWindow &window, bool GRAVITY, bool
         basicModules.locationAllowedR(rect, WINDOW_WIDTH, WINDOW_HEIGHT);
         //MODUL GRAWITACJI
         if(GRAVITY) checkGrav = false;
+    }
+
+    basic.update(rect, velocity);
+
+    window.clear();
+    window.draw(rect);
+    window.display();
+}
+
+void myRepresent::noGravityVisualisation(sf::RenderWindow &window,  bool USE_MOUSE, bool USE_KEYBOARD, bool VACUUM) {
+    sf::Texture texture;
+    if (!texture.loadFromFile("textures/blue.png", sf::IntRect(0, 0, gridSize, gridSize))) {
+        std::cout << "ERROR - to load texture\n";
+        exit(0);
+    }
+
+    rect.setTexture(texture);
+
+    bool moveMouse = NULL;
+    bool moveKeyboard = NULL;
+
+    if(USE_MOUSE == true) moveMouse  = basicModules.move(event, rect, window, vacumSpeed);
+    if(USE_KEYBOARD == true) moveKeyboard = basicModules.moveKeyboard(event, velocity, window, vacumSpeed);
+
+    if(moveMouse == false && moveKeyboard == false){
+        if(VACUUM) velocity += vacumSpeed;
+        basicModules.locationAllowedR(rect, WINDOW_WIDTH, WINDOW_HEIGHT);
+    } else {
+        basicModules.locationAllowedR(rect, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     basic.update(rect, velocity);
